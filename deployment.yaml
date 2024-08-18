@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pc
+  labels:
+    app: react-flask
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: react-flask
+  template:
+    metadata:
+      labels:
+        app: react-flask
+    spec:
+      containers:
+      - name: backend
+        image: server
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Never
+      - name: mongo-example
+        image: mongo
+        ports:
+        - containerPort: 27017
+        imagePullPolicy: Never
+      - name: frontend
+        image: client
+        ports:
+        - containerPort: 3000
+        imagePullPolicy: Never
+      restartPolicy: Always
